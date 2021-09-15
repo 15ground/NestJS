@@ -1,43 +1,39 @@
-import {
-  Column,
-  DataType,
-  IsUUID,
-  PrimaryKey,
-  Table,
-  Model,
-} from 'sequelize-typescript';
-import { UUIDV4 } from 'sequelize';
+import { DataTypes, Model, UUIDV4 } from 'sequelize';
+import { sequelizeConfig } from 'src/database/database.provider';
 
-@Table({
-  tableName: 'products',
-  timestamps: false,
-})
-export class Products extends Model<Products> {
-  @IsUUID(4)
-  @PrimaryKey
-  @Column({
-    type: DataType.UUID,
-    defaultValue: UUIDV4,
-  })
+export class Products {
   id?: string;
-  @Column({
-    type: DataType.STRING(50),
-    allowNull: false,
-  })
   name?: string;
-  @Column({
-    type: DataType.STRING(255),
-    allowNull: false,
-  })
   images?: string;
-  @Column({
-    type: DataType.NUMBER,
-    allowNull: false,
-  })
   price?: number;
-  @Column({
-    type: DataType.STRING(255),
-    allowNull: false,
-  })
   description?: string;
 }
+
+export const productSequelize = sequelizeConfig.define<
+  Model<Products>,
+  Products
+>('products', {
+  id: {
+    primaryKey: true,
+    type: DataTypes.UUID,
+  },
+  name: {
+    type: DataTypes.STRING(50),
+    allowNull: false,
+  },
+  description: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+  images: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
+  },
+  price: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+});
+
+// Cách define model product sequelize config
+// tự động sync product
