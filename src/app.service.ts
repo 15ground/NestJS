@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Categories, categoriesSequelize } from './model/Categories';
 import { Products, productSequelize } from './model/Products';
 
 @Injectable()
@@ -8,10 +9,15 @@ export class AppService {
   }
 
   getProduct(): Promise<Products[]> {
-    return productSequelize.findAll().then((res) => {
-      return res as Products[];
-    });
+    return productSequelize
+      .findAll({
+        include: categoriesSequelize,
+      })
+      .then((res) => {
+        return res as Products[];
+      });
   }
+
   async getOne(id: string): Promise<Products> {
     const productUpdate = await productSequelize.findOne({
       where: {

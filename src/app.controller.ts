@@ -9,6 +9,7 @@ import {
   Req,
 } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Categories } from './model/Categories';
 import { Products } from './model/Products';
 
 @Controller('api/products')
