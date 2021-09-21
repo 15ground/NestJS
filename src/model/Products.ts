@@ -44,6 +44,9 @@ export const productSequelize = sequelizeConfig.define<
   //   },
   // },
 });
-productSequelize.belongsTo(categoriesSequelize);
+productSequelize.belongsTo(categoriesSequelize, {
+  foreignKey: { allowNull: false },
+  onDelete: 'CASCADE',
+});
 // Cách define model product sequelize config
 // tự động sync product
